@@ -1,5 +1,6 @@
 package com.simple.controller;
 
+import com.simple.persistence.entity.Metadata;
 import com.simple.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")  // Replace with your React app's origin
@@ -24,7 +26,15 @@ public class MediaController {
         this.mediaService = mediaService;
     }
 
-
+    @GetMapping("/metadata")
+    public ResponseEntity<List<Metadata>> getAllMetadata() {
+        try {
+            return mediaService.getAllMetadata();
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return  ResponseEntity.status(500).build();
+        }
+    }
 
     @GetMapping("/stream-video")
     public ResponseEntity<StreamingResponseBody> streamVideo() {
