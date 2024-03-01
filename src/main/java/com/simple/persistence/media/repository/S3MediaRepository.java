@@ -17,8 +17,6 @@ public class S3MediaRepository implements MediaRepository {
         this.s3Client = s3Client;
     }
 
-    ;
-
     @Override
     public InputStream findBy(UUID uuid) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()

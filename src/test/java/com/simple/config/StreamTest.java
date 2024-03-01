@@ -1,7 +1,9 @@
-import com.simple.config.Stream;
+package com.simple.config;
+
 import com.simple.strategy.stream.StandardStream;
 import com.simple.strategy.stream.StreamStrategy;
 import com.simple.strategy.stream.ThrottledStream;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,7 @@ class StreamTest {
     private Stream stream;
 
     @Test
+    @DisplayName("Should create Standard StreamStrategy bean when THROTTLED property is false")
     void testStreamStrategyBeanStandard() {
         // Arrange
         Environment environment = mock(Environment.class);
@@ -32,6 +35,7 @@ class StreamTest {
     }
 
     @Test
+    @DisplayName("Should create ThrottledStreamStrategy bean when THROTTLED property is true")
     void testStreamStrategyBeanThrottled() {
         // Arrange
         Environment environment = mock(Environment.class);
@@ -46,10 +50,9 @@ class StreamTest {
     }
 
     @Test
+    @DisplayName("Should have available Stream bean")
     void testStreamBeanAvailability() {
         // Assert
         assertNotNull(stream);
     }
-
-    // Additional test cases for coverage if needed
 }
