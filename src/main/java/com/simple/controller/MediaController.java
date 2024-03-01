@@ -1,18 +1,17 @@
 package com.simple.controller;
 
-import com.simple.persistence.entity.Metadata;
+import com.simple.persistence.metadata.entity.Metadata;
 import com.simple.service.MediaService;
+import com.simple.service.MetadataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")  // Replace with your React app's origin
@@ -20,30 +19,33 @@ import java.util.List;
 @Slf4j
 public class MediaController {
     private final MediaService mediaService;
+    private final MetadataService metadataService;
 
     @Autowired
-    public MediaController(MediaService mediaService) {
+    public MediaController(MediaService mediaService, MetadataService metadataService) {
         this.mediaService = mediaService;
+        this.metadataService = metadataService;
     }
 
     @GetMapping("/metadata")
     public ResponseEntity<List<Metadata>> getAllMetadata() {
         try {
-            return mediaService.getAllMetadata();
+            return metadataService.getAllMetadata();
         } catch (Exception e) {
             log.error(e.getMessage());
-            return  ResponseEntity.status(500).build();
+            return ResponseEntity.status(500).build();
         }
     }
 
-    @GetMapping("/stream-video")
-    public ResponseEntity<StreamingResponseBody> streamVideo() {
+    @GetMapping("/media/{mediaUuid}/stream")
+    public ResponseEntity<StreamingResponseBody> streamVideo(
+            @PathVariable UUID mediaUuid
+    ) {
         try {
-            return mediaService.streamVideo();
+            return mediaService.streamMedia(mediaUuid);
         } catch (IOException e) {
             log.error(e.getMessage());
-            // Handle exception appropriately (e.g., log it)
-            return ResponseEntity.status(500).build();  // Internal Server Error
+            return ResponseEntity.status(500).build();
         }
     }
 }

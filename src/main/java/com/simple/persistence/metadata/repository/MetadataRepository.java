@@ -1,6 +1,6 @@
-package com.simple.persistence.repository;
+package com.simple.persistence.metadata.repository;
 
-import com.simple.persistence.entity.Metadata;
+import com.simple.persistence.metadata.entity.Metadata;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
