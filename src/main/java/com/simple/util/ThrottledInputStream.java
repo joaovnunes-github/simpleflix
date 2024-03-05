@@ -49,7 +49,9 @@ public class ThrottledInputStream extends InputStream {
         this.maxBytesPerSec = maxBytesPerSec;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     */
     @Override
     public int read() throws IOException {
         throttle();
@@ -60,7 +62,9 @@ public class ThrottledInputStream extends InputStream {
         return data;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     */
     @Override
     public int read(byte[] b) throws IOException {
         throttle();
@@ -71,7 +75,9 @@ public class ThrottledInputStream extends InputStream {
         return readLen;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     */
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
         throttle();
@@ -95,6 +101,7 @@ public class ThrottledInputStream extends InputStream {
 
     /**
      * Getter for the number of bytes read from this stream, since creation.
+     *
      * @return The number of bytes.
      */
     public long getTotalBytesRead() {
@@ -104,6 +111,7 @@ public class ThrottledInputStream extends InputStream {
     /**
      * Getter for the read-rate from this stream, since creation.
      * Calculated as bytesRead/elapsedTimeSinceStart.
+     *
      * @return Read rate, in bytes/sec.
      */
     public long getBytesPerSec() {
@@ -117,13 +125,16 @@ public class ThrottledInputStream extends InputStream {
 
     /**
      * Getter the total time spent in sleep.
+     *
      * @return Number of milliseconds spent in sleep.
      */
     public long getTotalSleepTime() {
         return totalSleepTime;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     */
     @Override
     public String toString() {
         return "ThrottledInputStream{" +

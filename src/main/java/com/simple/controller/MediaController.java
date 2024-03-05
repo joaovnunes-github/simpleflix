@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")  // Replace with your React app's origin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 @Slf4j
 public class MediaController {
