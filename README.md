@@ -10,22 +10,11 @@ Inversion of Control), object-oriented principles, strategies, and unit testing 
 
 ## Implementation Details
 
-- **S3 for Media Persistence:** SimpleFlix utilizes Amazon S3 for efficient and scalable storage of media content.
+1. **Java Spring Backend:** Developed using Java Spring, emphasizing best practices, design patterns, and the IoC paradigm.
+2. **Database Management:** PostgreSQL handles metadata storage, with JPA facilitating seamless database connectivity.
+3. **Media File Storage:** Amazon S3 serves as the repository for media files, ensuring scalable and efficient storage.
+4. **Database Migrations:** Flyway is employed for organized and version-controlled database migrations.
 
-- **JPA H2 for Metadata Persistence:** Metadata related to the media is stored using JPA (Java Persistence API) with H2,
-  providing a lightweight and embedded database solution.
-
-- **Spring IoC:** The project employs the Spring Framework's Inversion of Control to manage and wire components,
-  enhancing modularity and maintainability.
-
-- **Object-Oriented Design:** SimpleFlix adheres to object-oriented principles to create a clear and extensible
-  codebase.
-
-- **Strategy Pattern:** The application leverages the Strategy Pattern to dynamically select the streaming strategy
-  based on runtime conditions, offering flexibility and maintainability.
-
-- **Unit Testing:** Robust unit tests are implemented to ensure the reliability and correctness of the application's
-  functionalities.
 
 ## Getting Started
 
@@ -35,3 +24,11 @@ To get started with SimpleFlix, follow these steps:
 
    ```bash
    git clone https://github.com/joaokanta/simpleflix.git
+
+2. Seed and start databases:
+    ```bash
+   ./seed-databases.sh
+   
+3. Start application:
+    ```bash
+   mvn spring-boot:run
