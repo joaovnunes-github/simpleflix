@@ -9,11 +9,11 @@ import java.io.InputStream;
 import java.util.UUID;
 
 @Repository
-public class S3MediaRepository implements S3Repository {
+public class S3ImagePreviewRepository implements S3Repository {
     S3Client s3Client;
 
     @Autowired
-    public S3MediaRepository(S3Client s3Client) {
+    public S3ImagePreviewRepository(S3Client s3Client) {
         this.s3Client = s3Client;
     }
 
@@ -21,7 +21,7 @@ public class S3MediaRepository implements S3Repository {
     public InputStream findBy(UUID uuid) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket("simpleflix")
-                .key("media/" + uuid.toString())
+                .key("preview/image/" + uuid.toString())
                 .build();
         return s3Client.getObject(getObjectRequest);
     }

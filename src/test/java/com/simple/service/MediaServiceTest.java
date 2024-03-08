@@ -1,6 +1,6 @@
 package com.simple.service;
 
-import com.simple.persistence.media.repository.MediaRepository;
+import com.simple.persistence.media.repository.S3Repository;
 import com.simple.strategy.stream.StreamStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 class MediaServiceTest {
 
     @Mock
-    private MediaRepository mediaRepository;
+    private S3Repository s3Repository;
 
     @Mock
     private StreamStrategy streamStrategy;
@@ -39,13 +39,13 @@ class MediaServiceTest {
         InputStream mediaInputStream = new ByteArrayInputStream("Test content".getBytes());
         StreamingResponseBody streamingResponseBody = mock(StreamingResponseBody.class);
 
-        when(mediaRepository.findBy(uuid)).thenReturn(mediaInputStream);
+        when(s3Repository.findBy(uuid)).thenReturn(mediaInputStream);
         when(streamStrategy.stream(mediaInputStream)).thenReturn(streamingResponseBody);
 
         ResponseEntity<StreamingResponseBody> result = mediaService.streamMedia(uuid);
 
         assertEquals(ResponseEntity.ok().body(streamingResponseBody), result);
-        verify(mediaRepository, times(1)).findBy(uuid);
+        verify(s3Repository, times(1)).findBy(uuid);
         verify(streamStrategy, times(1)).stream(mediaInputStream);
     }
 }

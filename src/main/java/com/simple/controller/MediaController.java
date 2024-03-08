@@ -19,30 +19,41 @@ import java.util.UUID;
 @Slf4j
 public class MediaController {
     private final MediaService mediaService;
-    private final MetadataService metadataService;
 
     @Autowired
-    public MediaController(MediaService mediaService, MetadataService metadataService) {
+    public MediaController(MediaService mediaService) {
         this.mediaService = mediaService;
-        this.metadataService = metadataService;
     }
-
-    @GetMapping("/metadata")
-    public ResponseEntity<List<Metadata>> getAllMetadata() {
+    @GetMapping("/media/{uuid}/stream")
+    public ResponseEntity<StreamingResponseBody> streamVideo(
+            @PathVariable UUID uuid
+    ) {
         try {
-            return metadataService.getAllMetadata();
-        } catch (Exception e) {
+            return mediaService.streamMedia(uuid);
+        } catch (IOException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(500).build();
         }
     }
 
-    @GetMapping("/media/{mediaUuid}/stream")
-    public ResponseEntity<StreamingResponseBody> streamVideo(
-            @PathVariable UUID mediaUuid
+    @GetMapping("/media-preview/{uuid}/stream")
+    public ResponseEntity<StreamingResponseBody> streamMediaPreview(
+            @PathVariable UUID uuid
     ) {
         try {
-            return mediaService.streamMedia(mediaUuid);
+            return mediaService.streamMediaPreview(uuid);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    @GetMapping("/image-preview/{uuid}/stream")
+    public ResponseEntity<StreamingResponseBody> streamImagePreview(
+            @PathVariable UUID uuid
+    ) {
+        try {
+            return mediaService.streamImagePreview(uuid);
         } catch (IOException e) {
             log.error(e.getMessage());
             return ResponseEntity.status(500).build();

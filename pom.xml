@@ -76,7 +76,7 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5433/postgres</url>
+                    <url>jdbc:postgresql://localhost:5432/postgres</url>
                     <user>postgres</user>
                     <password>pass</password>
                     <defaultSchema>simpleflix</defaultSchema>
