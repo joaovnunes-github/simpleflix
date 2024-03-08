@@ -11,13 +11,14 @@ import java.util.UUID;
 @Getter
 public class Metadata {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID uuid;
-    @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
     private Long duration;
-    @Column(nullable = false)
-    private String s3Path;
+    @Column(name="media_s3_uuid")
+    private String mediaS3Uuid;
+    @Column(name="preview_s3_uuid")
+    private String previewS3Uuid;
+    @Column(name="thumbnail_s3_uuid")
+    private String thumbnailS3UUID;
 }
 

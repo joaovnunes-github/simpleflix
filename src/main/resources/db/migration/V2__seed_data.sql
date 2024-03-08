@@ -1,0 +1,1 @@
+INSERT INTO metadata VALUES (gen_random_uuid(), 'Luffy_Punches_a_Celestial_Dragon_One_Piece.mp4', 120, gen_random_uuid(), gen_random_uuid(), gen_random_uuid())

@@ -39,8 +39,8 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
@@ -61,13 +61,30 @@
             <artifactId>spring-boot-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5433/postgres</url>
+                    <user>postgres</user>
+                    <password>pass</password>
+                    <defaultSchema>simpleflix</defaultSchema>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
             </plugin>
         </plugins>
     </build>
