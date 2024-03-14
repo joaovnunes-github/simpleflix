@@ -1,6 +1,5 @@
 package com.simple.controller;
 
-import com.simple.persistence.metadata.entity.Metadata;
 import com.simple.service.MediaService;
 import com.simple.service.MetadataService;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,30 +29,6 @@ class MediaControllerTest {
 
     @InjectMocks
     private MediaController mediaController;
-
-    @Test
-    @DisplayName("Should return all metadata when successful")
-    void getAllMetadata_ShouldReturnAllMetadataWhenSuccessful() {
-        List<Metadata> metadataList = List.of(new Metadata(), new Metadata());
-        when(metadataService.getAllMetadata()).thenReturn(ResponseEntity.ok(metadataList));
-
-        ResponseEntity<List<Metadata>> responseEntity = mediaController.getAllMetadata();
-
-        assertEquals(200, responseEntity.getStatusCodeValue());
-        assertEquals(metadataList, responseEntity.getBody());
-        verify(metadataService, times(1)).getAllMetadata();
-    }
-
-    @Test
-    @DisplayName("Should handle exception and return 500 when getting all metadata")
-    void getAllMetadata_ShouldHandleExceptionAndReturn500WhenGettingAllMetadata() {
-        when(metadataService.getAllMetadata()).thenThrow(new RuntimeException("Simulating an exception"));
-
-        ResponseEntity<List<Metadata>> responseEntity = mediaController.getAllMetadata();
-
-        assertEquals(500, responseEntity.getStatusCodeValue());
-        verify(metadataService, times(1)).getAllMetadata();
-    }
 
     @Test
     @DisplayName("Should stream video successfully")
@@ -80,5 +54,69 @@ class MediaControllerTest {
 
         assertEquals(500, responseEntity.getStatusCodeValue());
         verify(mediaService, times(1)).streamMedia(mediaUuid);
+    }
+
+    @Test
+    @DisplayName("Should stream media preview successfully")
+    void streamMediaPreview_ShouldStreamMediaPreviewSuccessfully() throws IOException {
+        // Test setup
+        UUID mediaUuid = UUID.randomUUID();
+        StreamingResponseBody streamingResponseBody = mock(StreamingResponseBody.class);
+        when(mediaService.streamMediaPreview(mediaUuid)).thenReturn(ResponseEntity.ok(streamingResponseBody));
+
+        // Method under test
+        ResponseEntity<StreamingResponseBody> responseEntity = mediaController.streamMediaPreview(mediaUuid);
+
+        // Assertions
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals(streamingResponseBody, responseEntity.getBody());
+        verify(mediaService, times(1)).streamMediaPreview(mediaUuid);
+    }
+
+    @Test
+    @DisplayName("Should handle IO exception and return 500 when streaming media preview")
+    void streamMediaPreview_ShouldHandleIOExceptionAndReturn500WhenStreamingMediaPreview() throws IOException {
+        // Test setup
+        UUID mediaUuid = UUID.randomUUID();
+        when(mediaService.streamMediaPreview(mediaUuid)).thenThrow(new IOException("Simulating an IO exception"));
+
+        // Method under test
+        ResponseEntity<StreamingResponseBody> responseEntity = mediaController.streamMediaPreview(mediaUuid);
+
+        // Assertions
+        assertEquals(500, responseEntity.getStatusCodeValue());
+        verify(mediaService, times(1)).streamMediaPreview(mediaUuid);
+    }
+
+    @Test
+    @DisplayName("Should stream image preview successfully")
+    void streamImagePreview_ShouldStreamImagePreviewSuccessfully() throws IOException {
+        // Test setup
+        UUID mediaUuid = UUID.randomUUID();
+        StreamingResponseBody streamingResponseBody = mock(StreamingResponseBody.class);
+        when(mediaService.streamImagePreview(mediaUuid)).thenReturn(ResponseEntity.ok(streamingResponseBody));
+
+        // Method under test
+        ResponseEntity<StreamingResponseBody> responseEntity = mediaController.streamImagePreview(mediaUuid);
+
+        // Assertions
+        assertEquals(200, responseEntity.getStatusCodeValue());
+        assertEquals(streamingResponseBody, responseEntity.getBody());
+        verify(mediaService, times(1)).streamImagePreview(mediaUuid);
+    }
+
+    @Test
+    @DisplayName("Should handle IO exception and return 500 when streaming image preview")
+    void streamImagePreview_ShouldHandleIOExceptionAndReturn500WhenStreamingImagePreview() throws IOException {
+        // Test setup
+        UUID mediaUuid = UUID.randomUUID();
+        when(mediaService.streamImagePreview(mediaUuid)).thenThrow(new IOException("Simulating an IO exception"));
+
+        // Method under test
+        ResponseEntity<StreamingResponseBody> responseEntity = mediaController.streamImagePreview(mediaUuid);
+
+        // Assertions
+        assertEquals(500, responseEntity.getStatusCodeValue());
+        verify(mediaService, times(1)).streamImagePreview(mediaUuid);
     }
 }

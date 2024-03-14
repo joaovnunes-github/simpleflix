@@ -10,11 +10,11 @@ Inversion of Control), object-oriented principles, strategies, and unit testing 
 
 ## Implementation Details
 
-1. **Java Spring Backend:** Developed using Java Spring, emphasizing best practices, design patterns, and the IoC paradigm.
+1. **Java Spring Backend:** Developed using Java Spring, emphasizing best practices, design patterns, and the IoC
+   paradigm.
 2. **Database Management:** PostgreSQL handles metadata storage, with JPA facilitating seamless database connectivity.
 3. **Media File Storage:** Amazon S3 serves as the repository for media files, ensuring scalable and efficient storage.
 4. **Database Migrations:** Flyway is employed for organized and version-controlled database migrations.
-
 
 ## Getting Started
 
@@ -28,7 +28,7 @@ To get started with SimpleFlix, follow these steps:
 2. Seed and start databases:
     ```bash
    ./seed-databases.sh
-   
+
 3. Start application:
     ```bash
    mvn spring-boot:run

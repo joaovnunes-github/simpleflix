@@ -1,6 +1,8 @@
 package com.simple.service;
 
-import com.simple.persistence.media.repository.S3Repository;
+import com.simple.persistence.media.repository.S3ImagePreviewRepository;
+import com.simple.persistence.media.repository.S3MediaPreviewRepository;
+import com.simple.persistence.media.repository.S3MediaRepository;
 import com.simple.strategy.stream.StreamStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,10 +24,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @DisplayName("MediaService Test")
 class MediaServiceTest {
-
     @Mock
-    private S3Repository s3Repository;
-
+    S3MediaRepository s3MediaRepository;
+    @Mock
+    S3MediaPreviewRepository s3MediaPreviewRepository;
+    @Mock
+    S3ImagePreviewRepository s3ImagePreviewRepository;
     @Mock
     private StreamStrategy streamStrategy;
 
@@ -39,13 +43,47 @@ class MediaServiceTest {
         InputStream mediaInputStream = new ByteArrayInputStream("Test content".getBytes());
         StreamingResponseBody streamingResponseBody = mock(StreamingResponseBody.class);
 
-        when(s3Repository.findBy(uuid)).thenReturn(mediaInputStream);
+        when(s3MediaRepository.findBy(uuid)).thenReturn(mediaInputStream);
         when(streamStrategy.stream(mediaInputStream)).thenReturn(streamingResponseBody);
 
         ResponseEntity<StreamingResponseBody> result = mediaService.streamMedia(uuid);
 
         assertEquals(ResponseEntity.ok().body(streamingResponseBody), result);
-        verify(s3Repository, times(1)).findBy(uuid);
+        verify(s3MediaRepository, times(1)).findBy(uuid);
+        verify(streamStrategy, times(1)).stream(mediaInputStream);
+    }
+
+    @Test
+    @DisplayName("Should stream media preview successfully")
+    void streamMediaPreview_ShouldStreamMediaPreviewSuccessfully() throws IOException {
+        UUID uuid = UUID.randomUUID();
+        InputStream mediaInputStream = new ByteArrayInputStream("Test content".getBytes());
+        StreamingResponseBody streamingResponseBody = mock(StreamingResponseBody.class);
+
+        when(s3MediaPreviewRepository.findBy(uuid)).thenReturn(mediaInputStream);
+        when(streamStrategy.stream(mediaInputStream)).thenReturn(streamingResponseBody);
+
+        ResponseEntity<StreamingResponseBody> result = mediaService.streamMediaPreview(uuid);
+
+        assertEquals(ResponseEntity.ok().body(streamingResponseBody), result);
+        verify(s3MediaPreviewRepository, times(1)).findBy(uuid);
+        verify(streamStrategy, times(1)).stream(mediaInputStream);
+    }
+
+    @Test
+    @DisplayName("Should stream image preview successfully")
+    void streamImagePreview_ShouldStreamImagePreviewSuccessfully() throws IOException {
+        UUID uuid = UUID.randomUUID();
+        InputStream mediaInputStream = new ByteArrayInputStream("Test content".getBytes());
+        StreamingResponseBody streamingResponseBody = mock(StreamingResponseBody.class);
+
+        when(s3ImagePreviewRepository.findBy(uuid)).thenReturn(mediaInputStream);
+        when(streamStrategy.stream(mediaInputStream)).thenReturn(streamingResponseBody);
+
+        ResponseEntity<StreamingResponseBody> result = mediaService.streamImagePreview(uuid);
+
+        assertEquals(ResponseEntity.ok().body(streamingResponseBody), result);
+        verify(s3ImagePreviewRepository, times(1)).findBy(uuid);
         verify(streamStrategy, times(1)).stream(mediaInputStream);
     }
 }

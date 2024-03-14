@@ -1,8 +1,6 @@
 package com.simple.controller;
 
-import com.simple.persistence.metadata.entity.Metadata;
 import com.simple.service.MediaService;
-import com.simple.service.MetadataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +21,7 @@ public class MediaController {
     public MediaController(MediaService mediaService) {
         this.mediaService = mediaService;
     }
+
     @GetMapping("/media/{uuid}/stream")
     public ResponseEntity<StreamingResponseBody> streamVideo(
             @PathVariable UUID uuid

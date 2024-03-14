@@ -1,6 +1,8 @@
 package com.simple.persistence.metadata.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,11 +16,11 @@ public class Metadata {
     private UUID uuid;
     private String title;
     private Long duration;
-    @Column(name="media_uuid")
+    @Column(name = "media_uuid")
     private String mediaUuid;
-    @Column(name="media_preview_uuid")
+    @Column(name = "media_preview_uuid")
     private String mediaPreviewUuid;
-    @Column(name="image_preview_uuid")
+    @Column(name = "image_preview_uuid")
     private String imagePreviewUuid;
 }
 
