@@ -32,3 +32,9 @@ To get started with SimpleFlix, follow these steps:
 3. Start application:
     ```bash
    mvn spring-boot:run
+
+## Planned features
+
+
+1. Remove hardcoded project configurations and start consuming them from a Spring Cloud Config instance.
+2. User authentication
